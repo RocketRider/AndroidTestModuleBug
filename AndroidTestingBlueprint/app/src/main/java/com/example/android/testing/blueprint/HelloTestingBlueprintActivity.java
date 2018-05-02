@@ -24,12 +24,20 @@ import android.widget.TextView;
 import com.example.android.testing.blueprint.androidlibrarymodule.AndroidLibraryModuleClass;
 import com.example.android.testing.blueprint.plainjavamodule.MyPlainJavaClass;
 
+import javax.inject.Inject;
+
+import toothpick.Scope;
+import toothpick.Toothpick;
+
 /**
  * A simple {@link AppCompatActivity} that shows a text when a button is pressed.
  * <p>
  * Also, it has an instance of a class from a different module.
  */
 public class HelloTestingBlueprintActivity extends AppCompatActivity {
+
+    @Inject
+    SomeDependency dependency;
 
     private TextView mAndroidTestingRocksTextView;
 
@@ -47,6 +55,10 @@ public class HelloTestingBlueprintActivity extends AppCompatActivity {
 
         mPlainJavaClassInstance = new MyPlainJavaClass();
         mAndroidLibraryClassInstance = new AndroidLibraryModuleClass();
+
+        Scope openScope = Toothpick.openScope("Root");
+        Toothpick.inject(this, openScope);
+        dependency.test();
     }
 
     public void onClick(View view) {

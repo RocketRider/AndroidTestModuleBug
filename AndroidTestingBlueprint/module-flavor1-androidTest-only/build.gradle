@@ -2,6 +2,7 @@ apply plugin: 'com.android.test' // A plugin used for test-only-modules
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildTools
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -14,6 +15,14 @@ android {
         testApplicationId 'com.example.android.testing.blueprint.test'
         // The Instrumentation test runner used to run tests.
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+
+        multiDexEnabled true
+    }
+
+    applicationVariants.all { variant ->
+        variant.mergeResources.doLast {
+            delete fileTree("$buildDir/intermediates/res/merged/debug")
+        }
     }
 
     // Set the target app project. The module specified here should contain the production code
@@ -22,8 +31,17 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
+
     // Android Testing Support Library's runner and rules and hamcrest matchers
     implementation 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     implementation 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
     implementation 'org.hamcrest:hamcrest-core:' + rootProject.ext.hamcrestVersion
+    implementation 'org.mockito:mockito-android:' + rootProject.ext.mockitoVersion
+
+    implementation 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
+    implementation 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
+
+    // Espresso UI Testing
+    implementation 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoVersion
 }
