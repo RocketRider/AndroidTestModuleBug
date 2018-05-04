@@ -37,7 +37,13 @@ dependencies {
     implementation 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     implementation 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
     implementation 'org.hamcrest:hamcrest-core:' + rootProject.ext.hamcrestVersion
-    implementation 'org.mockito:mockito-android:' + rootProject.ext.mockitoVersion
+    implementation ('org.mockito:mockito-android:' + rootProject.ext.mockitoVersion){
+        exclude group: 'net.bytebuddy'
+    }
+
+    implementation "net.bytebuddy:byte-buddy:1.8.11"
+    implementation "net.bytebuddy:byte-buddy-agent:1.8.11"
+    implementation "net.bytebuddy:byte-buddy-android:1.8.11"
 
     implementation 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     implementation 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
