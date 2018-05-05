@@ -16,8 +16,10 @@
 
 package com.example.android.testing.blueprint;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -59,6 +61,17 @@ public class HelloTestingBlueprintActivity extends AppCompatActivity {
         Scope openScope = Toothpick.openScope("Root");
         Toothpick.inject(this, openScope);
         dependency.test();
+
+
+        MeasureCanvas measureCanvas = new MeasureCanvas();
+
+        Drawable drawable = getDrawable(R.drawable.ic_insert_link_black_24dp);
+        drawable.setBounds(0, 0, 64, 64);
+        drawable.draw(measureCanvas);
+
+        Log.wtf("Measure", "W:" + measureCanvas.getMeasuredWidth() + " H:" + measureCanvas.getMeasuredHeight());
+
+
     }
 
     public void onClick(View view) {
